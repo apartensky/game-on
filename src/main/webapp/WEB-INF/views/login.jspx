@@ -20,9 +20,12 @@
   <spring:message code="openid_login_title" var="openid_title" htmlEscape="false" />
   <util:panel id="title" title="${openid_title }">
     <spring:url var="googleLogoUrl" value="/resources/images/google-logo.png" />
-    <spring:url value="/resources/j_spring_openid_security_check" var="openid_url" />
+    <spring:url value="/gameon/openid_connect_login" var="openid_url" />
+    <spring:url value="openid_connect_login" var="openid_url" />    
     <form id="google_login_form" action="${fn:escapeXml(openid_url)}" method="post">
-	   <input name="openid_identifier" type="hidden" value="https://www.google.com/accounts/o8/id"/>
+<!-- 	   <input name="openid_identifier" type="hidden" value="https://www.google.com/accounts/o8/id"/> -->
+		 <input name="iss" type="hidden" value="https://accounts.google.com" />
+		 <input name="access_type" type="hidden" value="online" />
 	   <img id="google_logo" src="${fn:escapeXml(googleLogoUrl) }" />
 	   <input type="submit" value="Sign with Google"/>
 		</form>	
@@ -31,7 +34,7 @@
   <spring:message code="security_login_title" var="security_login_title" htmlEscape="false" />  
   <util:panel id="admin_login_panel" title="${security_login_title }">
   <spring:url value="/resources/j_spring_security_check" var="form_url" />
-    <form name="f" action="${fn:escapeXml(form_url)}" method="POST">
+    <form name="f" action="${fn:escapeXml(form_url)}" method="GET">
       <div>
         <label for="j_username">
           <spring:message code="security_login_form_name" />

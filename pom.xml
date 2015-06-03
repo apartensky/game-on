@@ -16,6 +16,7 @@
 		<spring.version>3.2.4.RELEASE</spring.version>
 		<spring-security.version>3.1.0.RELEASE</spring-security.version>
 		<jackson.version>2.2.2</jackson.version>
+		<mitreid-connect-version>1.1.16</mitreid-connect-version>
 	</properties>
 	
 	<profiles>
@@ -77,8 +78,14 @@
 		</pluginRepository>
 	</pluginRepositories>
 	<dependencies>
+			
+			<dependency>
+				<groupId>org.apache.httpcomponents</groupId>
+				<artifactId>httpclient</artifactId>
+				<version>4.3.4</version>
+			</dependency>
+			
       <!-- SuperCsv -->
-    
       <dependency>
         <groupId>net.sf.supercsv</groupId>
         <artifactId>super-csv</artifactId>
@@ -362,6 +369,13 @@
 			<artifactId>spring-security-openid</artifactId>
 			<version>${spring-security.version}</version>
 		</dependency>
+		
+		<!-- mitreid connect -->
+		<dependency>
+			<groupId>org.mitre</groupId>
+			<artifactId>openid-connect-client</artifactId>
+			<version>${mitreid-connect-version}</version>
+		</dependency>
 
 		<!-- Google Guava -->
 		<dependency>
@@ -392,6 +406,11 @@
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
 			<version>2.2.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.neo4j</groupId>
+			<artifactId>neo4j-cypher-compiler-2.1</artifactId>
+			<version>2.1.2</version>
 		</dependency>
 	</dependencies>
 	
@@ -538,9 +557,11 @@
 				<version>1.1</version>
 			</plugin>
 			<plugin>
-				<groupId>org.mortbay.jetty</groupId>
 				<artifactId>jetty-maven-plugin</artifactId>
+				<groupId>org.mortbay.jetty</groupId>
 				<version>8.1.4.v20120524</version>
+<!-- 				<groupId>org.eclipse.jetty</groupId> -->			
+<!-- 				<version>9.2.10.v20150310</version> -->
 				<configuration>
 					<webAppConfig>
 						<contextPath>/${project.name}</contextPath>		

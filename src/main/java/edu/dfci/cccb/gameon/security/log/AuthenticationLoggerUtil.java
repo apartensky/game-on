@@ -13,6 +13,8 @@ import org.springframework.security.openid.OpenIDAuthenticationToken;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ClassUtils;
 
+import edu.dfci.cccb.gameon.domain.GameonAuthenticationAdaptor;
+
 @Component
 public class AuthenticationLoggerUtil {
 	
@@ -30,7 +32,8 @@ public class AuthenticationLoggerUtil {
 		log.info(getLines(event));
 	}
 	
-	private String getLines(Authentication authentication){
+	private String getLines(Authentication auth){
+		GameonAuthenticationAdaptor authentication = new GameonAuthenticationAdaptor(auth);
 		final StringBuilder builder = new StringBuilder();
 		if(authentication!=null){			
 			builder.append(authentication.getName());

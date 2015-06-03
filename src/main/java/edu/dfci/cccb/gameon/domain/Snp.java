@@ -46,9 +46,9 @@ public class Snp {
 
     private static final TimeUnit DURATION_UNIT = DAYS;
 
-    private static final LoadingCache<UserDetails, AtomicInteger> users = CacheBuilder.newBuilder().expireAfterWrite(DURATION, DURATION_UNIT).build(new CacheLoader<UserDetails, AtomicInteger>() {
+    private static final LoadingCache<Object, AtomicInteger> users = CacheBuilder.newBuilder().expireAfterWrite(DURATION, DURATION_UNIT).build(new CacheLoader<Object, AtomicInteger>() {
 
-        public AtomicInteger load(UserDetails key) {
+        public AtomicInteger load(Object key) {
             return new AtomicInteger(1);
         }
     });
@@ -99,7 +99,7 @@ public class Snp {
 
     public static TypedQuery<Snp> findGeneric(Map<String, String[]> searchTerms) throws QueryLimitExceededException {
         try {
-        	UserDetails key = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        	Object key = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         	int queries = users.get(key).incrementAndGet();
         	log.debug ("query for " + key + " class " + key.getClass () + " current queries " + queries);
             if (queries > MAXIMUM_QUERIES) throw new QueryLimitExceededException();
